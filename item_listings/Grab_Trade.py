@@ -154,6 +154,28 @@ def value_extract_explicit_mod(item):
             result = ' '.join(cleaned_values)
             item_data[f"explicit_mod{idx}"] = result
 
+
+def value_extract_implict_mod(item):
+    for entry in item:
+        item_data = entry.get('item', {})
+
+        for i in range(1,4):
+            item_data[f"implicit_Mods{i}"] = None
+
+        implicit_mods = item_data.get('implicitMods',[])
+        for idx, mod in enumerate(implicit_mods[:4], start=1):
+            mods = mod.split()
+            cleaned_values = []
+            for value in mods:
+                clean_value = value.replace('[', '').replace(']', '')
+                if '|' in clean_value:
+                    clean_value = clean_value.split('|')[1]
+                cleaned_values.append(clean_value)
+            result = ' '.join(cleaned_values)
+            item_data[f"implicit_Mods{idx}"] = result
+
+
+
 def second_api(query_id, item_list_id):
     cookies = {
         'cf_clearance': 'your_cf_clearance_here',  # Replace with your actual clearance
@@ -188,9 +210,10 @@ def second_api(query_id, item_list_id):
         if response.status_code == 200:
             player_listings = response.json()
             item_values = player_listings['result']
-            value_extract_requirement(item_values)
-            value_extract_properties(item_values)
-            value_extract_explicit_mod(item_values)
+            # value_extract_requirement(item_values)
+            # value_extract_properties(item_values)
+            # value_extract_explicit_mod(item_values)
+            value_extract_implict_mod(item_values)
             df = pd.json_normalize(item_values)
             all_chunks.append(df)
         else:
