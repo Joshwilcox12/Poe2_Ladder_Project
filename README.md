@@ -13,4 +13,4 @@ Flow of the project so far is:
 4) I then use the csv file I downloaded to input the top 100 players and run the script
 Grab_Trade.py. This script will take each player and use the trade api to get their item listings
 in the format I want.
-
+ 
