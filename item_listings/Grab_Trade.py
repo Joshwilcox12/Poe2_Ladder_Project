@@ -8,7 +8,7 @@ import requests
 
 import os
 datestamp = datetime.now().date()
-csv_file_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), f'poe2_ladder_data/poe2_ladder_2025-05-11.csv')
+csv_file_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), f'poe2_ladder_data/poe2_ladder_{datestamp}.csv')
 df = pd.read_csv(csv_file_path).head(100)
 
 account_list = df[df['dead'] == False]['account_name'].tolist()
