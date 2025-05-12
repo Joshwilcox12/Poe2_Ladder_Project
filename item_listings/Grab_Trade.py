@@ -23,74 +23,77 @@ def check_auth_response(response, context=""):
     elif not response.ok:
         raise RuntimeError(f"{response.status_code} Error in {context}: {response.text[:200]}")
 def first_api(ladder_player):
-    cookies = {
-    'POESESSID': '80e3488108332c7f7b59ead4266233b5',
-    'cf_clearance': 'sVCZPjgg1t3huhcpw.YVVmjjGp_bt6qTQh_W4Aitf7k-1746258148-1.2.1.1-yVsVdB2qLgHmvk6NSVLY.52W8HFGYFeS.FTUwJrClyPFYmZ3hXW7zzbn1liTNRXNO9VyZA3jkW71.IMUtytLqSiqlG9J6M13H4arHVRwqyOSvYxMR_IKnJyf3W5KQ8J3T_jgimEqRbr1SP.8ICeVcB4uVwtZycXuorchdhtfqzZeiVqD_7apcu.AtCVNtRe8axk5ShXuujajigPWZrpJaLO5tfoE0.q_tgH1jexbfDkB7nsDK80JczfdZNi1k9re2t7nIlYmilUvr8awXJalVdaMeCz05PMRHva90kjanwGvIZhXZaphNI.L9w9X8v52_DcAOzCGhLS18KUnXf8MBuNvnUYV3dKpfRxFRjEkEDsl7aQc4YxyyK0sW5mvfucu',
-    }
 
-    headers = {
-        'accept': '*/*',
-        'accept-language': 'en-US,en;q=0.9,ko;q=0.8',
-        'content-type': 'application/json',
-        'origin': 'https://www.pathofexile.com',
-        'priority': 'u=1, i',
-        'referer': 'https://www.pathofexile.com/trade2/search/poe2/HC%20Dawn%20of%20the%20Hunt',
-        'sec-ch-ua': '"Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"',
-        'sec-ch-ua-arch': '"x86"',
-        'sec-ch-ua-bitness': '"64"',
-        'sec-ch-ua-full-version': '"135.0.7049.115"',
-        'sec-ch-ua-full-version-list': '"Google Chrome";v="135.0.7049.115", "Not-A.Brand";v="8.0.0.0", "Chromium";v="135.0.7049.115"',
-        'sec-ch-ua-mobile': '?0',
-        'sec-ch-ua-model': '""',
-        'sec-ch-ua-platform': '"Windows"',
-        'sec-ch-ua-platform-version': '"10.0.0"',
-        'sec-fetch-dest': 'empty',
-        'sec-fetch-mode': 'cors',
-        'sec-fetch-site': 'same-origin',
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36',
-        'x-requested-with': 'XMLHttpRequest',
-        # 'cookie': 'POESESSID=80e3488108332c7f7b59ead4266233b5; cf_clearance=sVCZPjgg1t3huhcpw.YVVmjjGp_bt6qTQh_W4Aitf7k-1746258148-1.2.1.1-yVsVdB2qLgHmvk6NSVLY.52W8HFGYFeS.FTUwJrClyPFYmZ3hXW7zzbn1liTNRXNO9VyZA3jkW71.IMUtytLqSiqlG9J6M13H4arHVRwqyOSvYxMR_IKnJyf3W5KQ8J3T_jgimEqRbr1SP.8ICeVcB4uVwtZycXuorchdhtfqzZeiVqD_7apcu.AtCVNtRe8axk5ShXuujajigPWZrpJaLO5tfoE0.q_tgH1jexbfDkB7nsDK80JczfdZNi1k9re2t7nIlYmilUvr8awXJalVdaMeCz05PMRHva90kjanwGvIZhXZaphNI.L9w9X8v52_DcAOzCGhLS18KUnXf8MBuNvnUYV3dKpfRxFRjEkEDsl7aQc4YxyyK0sW5mvfucu',
-    }
+    with open("POESESSID.txt","r") as f:
+        poesessid = f.read().strip()
+        cookies = {
+        'POESESSID': poesessid,
+        'cf_clearance': 'sVCZPjgg1t3huhcpw.YVVmjjGp_bt6qTQh_W4Aitf7k-1746258148-1.2.1.1-yVsVdB2qLgHmvk6NSVLY.52W8HFGYFeS.FTUwJrClyPFYmZ3hXW7zzbn1liTNRXNO9VyZA3jkW71.IMUtytLqSiqlG9J6M13H4arHVRwqyOSvYxMR_IKnJyf3W5KQ8J3T_jgimEqRbr1SP.8ICeVcB4uVwtZycXuorchdhtfqzZeiVqD_7apcu.AtCVNtRe8axk5ShXuujajigPWZrpJaLO5tfoE0.q_tgH1jexbfDkB7nsDK80JczfdZNi1k9re2t7nIlYmilUvr8awXJalVdaMeCz05PMRHva90kjanwGvIZhXZaphNI.L9w9X8v52_DcAOzCGhLS18KUnXf8MBuNvnUYV3dKpfRxFRjEkEDsl7aQc4YxyyK0sW5mvfucu',
+        }
+
+        headers = {
+            'accept': '*/*',
+            'accept-language': 'en-US,en;q=0.9,ko;q=0.8',
+            'content-type': 'application/json',
+            'origin': 'https://www.pathofexile.com',
+            'priority': 'u=1, i',
+            'referer': 'https://www.pathofexile.com/trade2/search/poe2/HC%20Dawn%20of%20the%20Hunt',
+            'sec-ch-ua': '"Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"',
+            'sec-ch-ua-arch': '"x86"',
+            'sec-ch-ua-bitness': '"64"',
+            'sec-ch-ua-full-version': '"135.0.7049.115"',
+            'sec-ch-ua-full-version-list': '"Google Chrome";v="135.0.7049.115", "Not-A.Brand";v="8.0.0.0", "Chromium";v="135.0.7049.115"',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-model': '""',
+            'sec-ch-ua-platform': '"Windows"',
+            'sec-ch-ua-platform-version': '"10.0.0"',
+            'sec-fetch-dest': 'empty',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-site': 'same-origin',
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36',
+            'x-requested-with': 'XMLHttpRequest',
+            # 'cookie': 'POESESSID=80e3488108332c7f7b59ead4266233b5; cf_clearance=sVCZPjgg1t3huhcpw.YVVmjjGp_bt6qTQh_W4Aitf7k-1746258148-1.2.1.1-yVsVdB2qLgHmvk6NSVLY.52W8HFGYFeS.FTUwJrClyPFYmZ3hXW7zzbn1liTNRXNO9VyZA3jkW71.IMUtytLqSiqlG9J6M13H4arHVRwqyOSvYxMR_IKnJyf3W5KQ8J3T_jgimEqRbr1SP.8ICeVcB4uVwtZycXuorchdhtfqzZeiVqD_7apcu.AtCVNtRe8axk5ShXuujajigPWZrpJaLO5tfoE0.q_tgH1jexbfDkB7nsDK80JczfdZNi1k9re2t7nIlYmilUvr8awXJalVdaMeCz05PMRHva90kjanwGvIZhXZaphNI.L9w9X8v52_DcAOzCGhLS18KUnXf8MBuNvnUYV3dKpfRxFRjEkEDsl7aQc4YxyyK0sW5mvfucu',
+        }
 
 
 
-    json_data = {
-        'query': {
-            'status': {
-                'option': 'any',
-            },
-            'stats': [
-                {
-                    'type': 'and',
-                    'filters': [],
+        json_data = {
+            'query': {
+                'status': {
+                    'option': 'any',
                 },
-            ],
-            'filters': {
-                'trade_filters': {
-                    'filters': {
-                        'account': {
-                            'input': ladder_player,
+                'stats': [
+                    {
+                        'type': 'and',
+                        'filters': [],
+                    },
+                ],
+                'filters': {
+                    'trade_filters': {
+                        'filters': {
+                            'account': {
+                                'input': ladder_player,
+                            },
                         },
                     },
                 },
             },
-        },
-        'sort': {
-            'price': 'asc',
-        },
-    }
+            'sort': {
+                'price': 'asc',
+            },
+        }
 
-    response = requests.post(
-        'https://www.pathofexile.com/api/trade2/search/poe2/HC%20Dawn%20of%20the%20Hunt',
-        cookies=cookies,
-        headers=headers,
-        json=json_data,
-    )
-    check_auth_response(response, context=f"first_api for {ladder_player}")
-    listings = response.json()
-    listings_query_id = listings['id']
-    listings_id = listings['result']
-    return listings_query_id, listings_id
+        response = requests.post(
+            'https://www.pathofexile.com/api/trade2/search/poe2/HC%20Dawn%20of%20the%20Hunt',
+            cookies=cookies,
+            headers=headers,
+            json=json_data,
+        )
+        check_auth_response(response, context=f"first_api for {ladder_player}")
+        listings = response.json()
+        listings_query_id = listings['id']
+        listings_id = listings['result']
+        return listings_query_id, listings_id
 
 
 
