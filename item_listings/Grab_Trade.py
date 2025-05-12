@@ -52,7 +52,6 @@ def first_api(ladder_player):
             'sec-fetch-site': 'same-origin',
             'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36',
             'x-requested-with': 'XMLHttpRequest',
-            # 'cookie': 'POESESSID=80e3488108332c7f7b59ead4266233b5; cf_clearance=sVCZPjgg1t3huhcpw.YVVmjjGp_bt6qTQh_W4Aitf7k-1746258148-1.2.1.1-yVsVdB2qLgHmvk6NSVLY.52W8HFGYFeS.FTUwJrClyPFYmZ3hXW7zzbn1liTNRXNO9VyZA3jkW71.IMUtytLqSiqlG9J6M13H4arHVRwqyOSvYxMR_IKnJyf3W5KQ8J3T_jgimEqRbr1SP.8ICeVcB4uVwtZycXuorchdhtfqzZeiVqD_7apcu.AtCVNtRe8axk5ShXuujajigPWZrpJaLO5tfoE0.q_tgH1jexbfDkB7nsDK80JczfdZNi1k9re2t7nIlYmilUvr8awXJalVdaMeCz05PMRHva90kjanwGvIZhXZaphNI.L9w9X8v52_DcAOzCGhLS18KUnXf8MBuNvnUYV3dKpfRxFRjEkEDsl7aQc4YxyyK0sW5mvfucu',
         }
 
 
