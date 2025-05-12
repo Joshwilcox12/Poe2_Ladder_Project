@@ -174,7 +174,15 @@ def value_extract_implicit_mod(item):
             result = ' '.join(cleaned_values)
             item_data[f"implicit_Mods{idx}"] = result
 
+def value_extract_socket_num(item):
+    for entry in item:
+        item_data = entry.get('item',{})
 
+        for num in item_data.get('sockets',[]):
+            if 'sockets' in item_data:
+                item_data.update({'sockets':len(num)})
+            else:
+                None
 
 def second_api(query_id, item_list_id):
     cookies = {
@@ -214,6 +222,7 @@ def second_api(query_id, item_list_id):
             value_extract_properties(item_values)
             value_extract_explicit_mod(item_values)
             value_extract_implicit_mod(item_values)
+            value_extract_socket_num(item_values)
             df = pd.json_normalize(item_values)
             all_chunks.append(df)
         else:
