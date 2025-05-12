@@ -15,6 +15,7 @@ account_list = df[df['dead'] == False]['account_name'].tolist()
 #later I want to try having ladder players be a value from database and be looped through by python to look up each players item listing
 print(f"Account List: {account_list}")
 print('this is a test for branches')
+print('another testing branch print')
 def check_auth_response(response, context=""):
     if response.status_code == 403:
         raise RuntimeError(f"403 Forbidden: Likely expired cookies or Cloudflare block in {context}.")
