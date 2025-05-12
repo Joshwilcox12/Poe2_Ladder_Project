@@ -8,8 +8,8 @@ import requests
 
 import os
 datestamp = datetime.now().date()
-csv_file_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), f'poe2_ladder_data/poe2_ladder_{datestamp}.csv')
-df = pd.read_csv(csv_file_path).head(100)
+csv_file_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), f'poe2_ladder_data/poe2_ladder_2025-05-11.csv')
+df = pd.read_csv(csv_file_path).head(1)
 
 account_list = df[df['dead'] == False]['account_name'].tolist()
 #later I want to try having ladder players be a value from database and be looped through by python to look up each players item listing
@@ -155,7 +155,7 @@ def value_extract_explicit_mod(item):
             item_data[f"explicit_mod{idx}"] = result
 
 
-def value_extract_implict_mod(item):
+def value_extract_implicit_mod(item):
     for entry in item:
         item_data = entry.get('item', {})
 
@@ -163,7 +163,7 @@ def value_extract_implict_mod(item):
             item_data[f"implicit_Mods{i}"] = None
 
         implicit_mods = item_data.get('implicitMods',[])
-        for idx, mod in enumerate(implicit_mods[:4], start=1):
+        for idx, mod in enumerate(implicit_mods[:3], start=1):
             mods = mod.split()
             cleaned_values = []
             for value in mods:
@@ -210,10 +210,10 @@ def second_api(query_id, item_list_id):
         if response.status_code == 200:
             player_listings = response.json()
             item_values = player_listings['result']
-            # value_extract_requirement(item_values)
-            # value_extract_properties(item_values)
-            # value_extract_explicit_mod(item_values)
-            value_extract_implict_mod(item_values)
+            value_extract_requirement(item_values)
+            value_extract_properties(item_values)
+            value_extract_explicit_mod(item_values)
+            value_extract_implicit_mod(item_values)
             df = pd.json_normalize(item_values)
             all_chunks.append(df)
         else:
@@ -254,7 +254,8 @@ def main():
                            "item.realm", "item.league", "item.id", "item.name", "item.typeLine",
                            "item.baseType", "item.rarity", "item.ilvl", "item.identified",
                             "item.requirements_Level", "item.requirements_Strength",
-                             "item.requirements_Dexterity","item.requirements_Intelligence","item.explicitMods", "item.explicit_mod1",
+                             "item.requirements_Dexterity","item.requirements_Intelligence","item.implicitMods",
+                            "item.implicit_Mods1", "item.implicit_Mods2", "item.implicit_Mods3", "item.explicitMods", "item.explicit_mod1",
                              "item.explicit_mod2", "item.explicit_mod3", "item.explicit_mod4", "item.explicit_mod5", "item.explicit_mod6",
                               "item.corrupted", "item.sockets", "item.grantedSkills","item.property_1","item.property_2"
                              ,"item.property_3","item.property_4","item.property_5","item.property_6"]].rename(columns={
@@ -290,6 +291,9 @@ def main():
                             "item.explicit_mod5": "explicit_mod5",
                             "item.explicit_mod6": "explicit_mod6",
                             "item.implicitMods": "implicit_mods",
+                            "item.implicit_Mods1" :"implicit_mods1",
+                            "item.implicit_Mods2":"implicit_mods2",
+                            "item.implicit_Mods3":"implicit_mods3",
                             "item.corrupted": "corrupted",
                             "item.sockets": "num_sockets",
                             "item.grantedSkills": "granted_skills"
