@@ -8,14 +8,16 @@ import os
 from sqlalchemy import create_engine
 
 #coonect to database
-conn = psycopg2.connect(
-    host ="localhost",
-    port = "5432",
-    database = "Path of Exile 2 Ladder",
-    user = "postgres",
-    password = "Codwaw"
-)
+with open("db_creds.txt") as f:
+    host, port, db, user, password = [line.strip() for line in f]
 
+conn = psycopg2.connect(
+    host=host,
+    port=port,
+    database=db,
+    user=user,
+    password=password
+)
 #create cursor
 cur = conn.cursor()
 
