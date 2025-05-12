@@ -63,6 +63,7 @@ def job():
 
     else:
         print(f"Error: Failed to get data {response.status_code}")
+        print('more error cool test')
 
 
 #now that the data is saved on in the folder as csv, also upload it to the database
