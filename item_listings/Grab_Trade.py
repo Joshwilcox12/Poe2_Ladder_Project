@@ -273,13 +273,14 @@ def uploadcsv():
 def main():
     print(f"{datestamp} Top 100 player Item Listings")
     all_players_df = []
+    i = 1
     if not account_list:
         print("No players to process in the account list.")
 
         return  # Exit early if account_list is empty
 
     for player in account_list:
-        i = 1
+
         print(f"Processing player{i} {player}...")
         query_id, item_list_id = first_api(player)
         player_df = second_api(query_id, item_list_id)
