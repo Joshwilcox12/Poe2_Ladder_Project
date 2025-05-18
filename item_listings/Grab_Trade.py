@@ -5,37 +5,16 @@ from datetime import datetime
 import pandas
 import pandas as pd
 import requests
+
 import os
-from sqlalchemy import create_engine
-import psycopg2
 datestamp = datetime.now().date()
-csv_file_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), f'poe2_ladder_data/poe2_ladder_{datestamp}.csv')
+csv_file_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), f'poe2_ladder_data/poe2_ladder_2025-05-01.csv')
 df = pd.read_csv(csv_file_path).head(100)
 
 account_list = df[df['dead'] == False]['account_name'].tolist()
 #later I want to try having ladder players be a value from database and be looped through by python to look up each players item listing
 print(f"Account List: {account_list}")
-
-
-with open("../db_creds.txt") as f:
-    host, port, db, user, password = [line.strip() for line in f]
-
-conn = psycopg2.connect(
-    host=host,
-    port=port,
-    database=db,
-    user=user,
-    password=password
-)
-#create cursor
-cur = conn.cursor()
-
-
-
-
-
-
-
+print('this is a test for branches')
 def check_auth_response(response, context=""):
     if response.status_code == 403:
         raise RuntimeError(f"403 Forbidden: Likely expired cookies or Cloudflare block in {context}.")
@@ -45,7 +24,7 @@ def check_auth_response(response, context=""):
         raise RuntimeError(f"{response.status_code} Error in {context}: {response.text[:200]}")
 def first_api(ladder_player):
 
-    with open("POESESSID.txt", "r") as f:
+    with open("POESESSID.txt","r") as f:
         poesessid = f.read().strip()
         cookies = {
         'POESESSID': poesessid,
@@ -258,22 +237,12 @@ def second_api(query_id, item_list_id):
         return full_df
     else:
         return None
-def uploadcsv():
-    datestamp = datetime.now().date()
-    file_name = f"all_players_listings_{datestamp}.csv"
-    #look at csv
-    df = pandas.read_csv(f'C:/Users/Josh/Desktop/PycharmProjects/PythonProject/item_listings/player_listings/{file_name}')
-    #create connection with sqlalchemy
-    engine = create_engine('postgresql+psycopg2://postgres:Codwaw1212@localhost:5432/Path of Exile 2 Ladder')
-    #upload csv to database
-    df.to_sql('player_item_list', engine, if_exists ='append', index = False)
 
 
 # Main function that iterates through each player in the account_list
 def main():
     print(f"{datestamp} Top 100 player Item Listings")
     all_players_df = []
-    i = 1
     if not account_list:
         print("No players to process in the account list.")
 
@@ -281,26 +250,24 @@ def main():
 
     for player in account_list:
 
-        print(f"Processing player{i} {player}...")
+        print(f"Processing player {player}...")
         query_id, item_list_id = first_api(player)
         player_df = second_api(query_id, item_list_id)
         if player_df is not None:
            all_players_df.append(player_df)
         time.sleep(1)
-        i += 1
     if all_players_df:
        final_df = pd.concat(all_players_df, ignore_index=True)
-       final_df["date_grabbed"] = datestamp
        final_df = final_df[["id", "listing.indexed", "listing.stash.name", "listing.account.name",
                            "listing.price.type", "listing.price.amount", "listing.price.currency",
                            "item.realm", "item.league", "item.id", "item.name", "item.typeLine",
                            "item.baseType", "item.rarity", "item.ilvl", "item.identified",
                             "item.requirements_Level", "item.requirements_Strength",
-                             "item.requirements_Dexterity","item.requirements_Intelligence",
-                            "item.implicit_Mods1", "item.implicit_Mods2", "item.implicit_Mods3", "item.explicit_mod1",
+                             "item.requirements_Dexterity","item.requirements_Intelligence","item.implicitMods",
+                            "item.implicit_Mods1", "item.implicit_Mods2", "item.implicit_Mods3", "item.explicitMods", "item.explicit_mod1",
                              "item.explicit_mod2", "item.explicit_mod3", "item.explicit_mod4", "item.explicit_mod5", "item.explicit_mod6",
                               "item.corrupted", "item.sockets", "item.grantedSkills","item.property_1","item.property_2"
-                             ,"item.property_3","item.property_4","item.property_5","item.property_6", "date_grabbed"]].rename(columns={
+                             ,"item.property_3","item.property_4","item.property_5","item.property_6"]].rename(columns={
                             "listing.indexed": "indexed_at",
                             "listing.stash.name": "stash_name",
                             "listing.account.name": "account_name",
@@ -332,23 +299,18 @@ def main():
                             "item.explicit_mod4": "explicit_mod4",
                             "item.explicit_mod5": "explicit_mod5",
                             "item.explicit_mod6": "explicit_mod6",
+                            "item.implicitMods": "implicit_mods",
                             "item.implicit_Mods1" :"implicit_mods1",
                             "item.implicit_Mods2":"implicit_mods2",
                             "item.implicit_Mods3":"implicit_mods3",
                             "item.corrupted": "corrupted",
                             "item.sockets": "num_sockets",
                             "item.grantedSkills": "granted_skills"
-                             })
+})
 
-       final_df.to_csv(f"player_listings/all_players_listings_{datestamp}.csv", index=False, encoding='utf-8', sep=',')
+       final_df.to_csv(f"player_listings/all_players_listings_{datestamp}.csv", index=False, encoding='utf-8-sig')
        print("Saved combined CSV.")
-
-
-
-       uploadcsv()
 
 
 if __name__ == "__main__":
     main()  # This will start the process when the script is run
-
-
