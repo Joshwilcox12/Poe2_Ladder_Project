@@ -75,7 +75,7 @@ def uploadcsv():
     #look at csv
     df = pandas.read_csv(f'C:/Users/Josh/Desktop/PycharmProjects/PythonProject/poe2_ladder_data/{file_name}')
     #create connection with sqlalchemy
-    engine = create_engine('postgresql+psycopg2://postgres:Codwaw1212@localhost:5432/Path of Exile 2 Ladder')
+    engine = create_engine('postgresql+psycopg2://postgres:Codwaw1212@localhost:5432/Path_of_Exile_2_Ladder')
     #upload csv to database
     df.to_sql('hc_dawn_of_the_hunt', engine, if_exists ='append', index = False)
 

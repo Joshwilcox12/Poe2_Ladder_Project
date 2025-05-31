@@ -41,7 +41,7 @@ def uploadcsv():
     #look at csv
     df = pandas.read_csv(f'C:/Users/Josh/Desktop/PycharmProjects/PythonProject/item_listings/player_listings/{file_name}')
     #create connection with sqlalchemy
-    engine = create_engine('postgresql+psycopg2://postgres:Codwaw1212@localhost:5432/Path of Exile 2 Ladder')
+    engine = create_engine('postgresql+psycopg2://postgres:Codwaw1212@localhost:5432/Path_of_Exile_2_Ladder')
     #upload csv to database
     df.to_sql('player_item_list', engine, if_exists ='append', index = False)
 
@@ -190,7 +190,7 @@ def first_api_desc(ladder_player):
         listings = response.json()
         listings_query_id = listings['id']
         listings_id_desc = listings['result']
-        time.sleep(2)
+        time.sleep(3)
         return listings_query_id, listings_id_desc
 
 
@@ -345,9 +345,9 @@ def main():
         print("No players to process in the account list.")
 
         return  # Exit early if account_list is empty
-
+    i = 1
     for player in account_list:
-        i= 1
+
         item_list_id_asc = []
         item_list_id_desc = []
 
@@ -412,7 +412,7 @@ def main():
                             "item.sockets": "num_sockets",
                             "item.grantedSkills": "granted_skills"
 })
-
+       final_df = final_df.drop_duplicates(subset=["id", "date_grabbed"], keep="first")
        final_df.to_csv(f"player_listings/all_players_listings_{datestamp}.csv", index=False, encoding='utf-8', sep=',')
        print("Saved combined CSV.")
 
