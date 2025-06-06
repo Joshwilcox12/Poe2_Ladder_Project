@@ -1,5 +1,5 @@
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 import pandas
 import pandas as pd
 import requests
@@ -36,7 +36,6 @@ def check_auth_response(response, context=""):
         raise RuntimeError(f"{response.status_code} Error in {context}: {response.text[:200]}")
 
 def uploadcsv():
-    datestamp = datetime.now().date()
     file_name = f"all_players_listings_{datestamp}.csv"
     #look at csv
     df = pandas.read_csv(f'C:/Users/Josh/Desktop/PycharmProjects/PythonProject/item_listings/player_listings/{file_name}')
@@ -421,3 +420,4 @@ def main():
 
 if __name__ == "__main__":
     main()  # This will start the process when the script is run
+
