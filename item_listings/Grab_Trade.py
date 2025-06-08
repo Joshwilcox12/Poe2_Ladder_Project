@@ -189,7 +189,7 @@ def first_api_desc(ladder_player):
         listings = response.json()
         listings_query_id = listings['id']
         listings_id_desc = listings['result']
-        time.sleep(3)
+        time.sleep(5)
         return listings_query_id, listings_id_desc
 
 
