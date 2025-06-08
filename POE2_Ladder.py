@@ -53,11 +53,47 @@ def job():
         #replacing some header names to be better
         df.columns = [col.replace("character.", "") for col in df.columns]
         df.columns = [col.replace("account.","account_") for col in df.columns]
+        df.replace(to_replace=['Monk2',
+'Monk3',
+'Ranger1',
+'Ranger3',
+'Warrior1',
+'Warrior2',
+'Warrior3',
+'Witch1',
+'Witch2',
+'Witch3',
+'Sorceress1',
+'Sorceress2',
+'Huntress1',
+'Huntress3',
+'Mercenary1',
+'Mercenary2',
+'Mercenary3',]
+, value=['invoker',
+'acolyte of chayula',
+'deadeye',
+'path finder',
+'titan',
+'warbringer',
+'smith of kitava',
+'infernalist',
+'bloodmage',
+'lich',
+'stormweaver',
+'chronomancer',
+'amazon',
+'ritualist',
+'tactician',
+'witchhunter',
+'gemling legionnaire',
+])
+        #return just player list in the function so it can be used in grab_trade.py
         player_list = df["account_name"].tolist()
         #creating a date to name the files with to track which file is which date
         datestamp = datetime.now().date()
         df["snapshot_date"] = datestamp # optional: add time to dataframe
-        #convert it to csv file and save it, should make work on actuall ysaving at a location I want?
+
         df.to_csv(f"poe2_ladder_data/poe2_ladder_{datestamp}.csv", index=False, encoding='utf-8-sig')
         file_name = f"poe2_ladder_{datestamp}.csv"
         print(file_name)
