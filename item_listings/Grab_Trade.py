@@ -310,6 +310,7 @@ def second_api(query_id, item_list_id):
             params=params,
             cookies=cookies,
             headers=headers,
+            timeout=10
         )
         check_auth_response(response, context=f"second_api chunk {i}-{i + chunk_size}")
         if response.status_code == 200:
