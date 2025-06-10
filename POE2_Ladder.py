@@ -53,41 +53,27 @@ def job():
         #replacing some header names to be better
         df.columns = [col.replace("character.", "") for col in df.columns]
         df.columns = [col.replace("account.","account_") for col in df.columns]
-        df.replace(to_replace=['Monk2',
-'Monk3',
-'Ranger1',
-'Ranger3',
-'Warrior1',
-'Warrior2',
-'Warrior3',
-'Witch1',
-'Witch2',
-'Witch3',
-'Sorceress1',
-'Sorceress2',
-'Huntress1',
-'Huntress3',
-'Mercenary1',
-'Mercenary2',
-'Mercenary3',]
-, value=['invoker',
-'acolyte of chayula',
-'deadeye',
-'path finder',
-'titan',
-'warbringer',
-'smith of kitava',
-'infernalist',
-'bloodmage',
-'lich',
-'stormweaver',
-'chronomancer',
-'amazon',
-'ritualist',
-'tactician',
-'witchhunter',
-'gemling legionnaire',
-])
+        class_mapping = {
+            'Monk2': 'invoker',
+            'Monk3': 'acolyte of chayula',
+            'Ranger1': 'deadeye',
+            'Ranger3': 'path finder',
+            'Warrior1': 'titan',
+            'Warrior2': 'warbringer',
+            'Warrior3': 'smith of kitava',
+            'Witch1': 'infernalist',
+            'Witch2': 'bloodmage',
+            'Witch3': 'lich',
+            'Sorceress1': 'stormweaver',
+            'Sorceress2': 'chronomancer',
+            'Huntress1': 'amazon',
+            'Huntress3': 'ritualist',
+            'Mercenary1': 'tactician',
+            'Mercenary2': 'witchhunter',
+            'Mercenary3': 'gemling legionnaire',
+        }
+
+        df['class'] = df['class'].replace(class_mapping)
         #return just player list in the function so it can be used in grab_trade.py
         player_list = df["account_name"].tolist()
         #creating a date to name the files with to track which file is which date
