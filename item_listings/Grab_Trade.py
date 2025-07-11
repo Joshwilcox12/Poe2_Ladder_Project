@@ -40,7 +40,7 @@ def uploadcsv():
     #look at csv
     df = pandas.read_csv(f'C:/Users/Josh/Desktop/PycharmProjects/PythonProject/item_listings/player_listings/{file_name}')
     #create connection with sqlalchemy
-    engine = create_engine('postgresql+psycopg2://postgres:Codwaw1212@localhost:5432/Path_of_Exile_2_Ladder')
+    engine = create_engine(f"postgresql+psycopg2://{user}:{password}@{host}:{port}/Path_of_Exile_2_Ladder")
     #upload csv to database
     df.to_sql('player_item_list', engine, if_exists ='append', index = False)
 
