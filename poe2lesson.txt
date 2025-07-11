@@ -1,0 +1,14 @@
+problems I ran into with this project:
+
+api can only process 10 ids at once
+different nested dictionary and lists
+when key is missing in dictionary because not all items have it
+renaming columns
+api timeout
+
+
+go back and understand how each json is saved in the list
+how each chunk is saved in the list
+how it gets all combined together
+by end of project I should be able to explain each step that 
+I am doing or else I didn't make this at all and it was all gpt
