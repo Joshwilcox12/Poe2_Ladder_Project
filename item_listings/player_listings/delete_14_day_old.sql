@@ -1,0 +1,1 @@
+DELETE FROM player_item_list WHERE CAST(date_grabbed AS date) < CURRENT_DATE - INTERVAL '14 days';
