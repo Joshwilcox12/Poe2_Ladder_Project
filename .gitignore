@@ -1,2 +1,18 @@
-"poesessid.txt" 
-"db_creds.txt" 
+__pycache__/
+*.py[cod]
+
+# Environment
+.env
+db_creds.txt
+poesessid.txt
+
+# IDE / Editor
+.idea/
+*.iml
+
+# Data
+poe2_ladder_data/*.csv
+item_listings/player_listings/*.csv
+
+# System
+.DS_Store
