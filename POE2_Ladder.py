@@ -1,4 +1,5 @@
 from datetime import datetime
+from datetime import date
 
 import pandas
 import requests
@@ -21,7 +22,7 @@ from sqlalchemy import create_engine
 # cur = conn.cursor()
 
 leagues = ["Dawn%2520of%2520the%2520Hunt","HC%2520Dawn%2520of%2520the%2520Hunt","SSF%2520Dawn%2520of%2520the%2520Hunt","HC%2520SSF%2520Dawn%2520of%2520the%2520Hunt"]
-
+date = date.today()
 
 
 
@@ -90,10 +91,35 @@ def league_info(league_name):
         else:
             print(f"Error: Failed to get data {response.status_code}")
 
-    print(league_list)
+    return league_list
 
 
 
+
+
+def save_league_data(league_data):
+  all_dfs = []
+  directory = "C:/Users/Josh/Desktop/PycharmProjects/PythonProject/poe2_ladder_data"
+  for i, league in enumerate(league_data):
+    update_league ={}
+    for name, data in league.items():
+       update_name = name.replace("%2520","_").lower()
+       update_league[update_name] = data 
+       print(update_name)
+    league_data[i] = update_league
+
+  for league_folders in os.listdir(directory):
+     for league in league_data:
+        for key in league:
+           if key == league_folders:
+              output_path = os.path.join(directory, league_folders, f"{key}_ladder_data_{date}.csv")
+              df = league[key]
+              df.to_csv(output_path, index=False)
+              all_dfs.append(df)
+  return all_dfs
+
+response = league_info(leagues)
+save_league_data(response)
 
 # Next steps, save each league and it's df as a csv in the correct folder based on key = name. lowerand replace.
 
