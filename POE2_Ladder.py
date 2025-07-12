@@ -1,11 +1,9 @@
 from datetime import datetime
 from datetime import date
-
-import pandas
+import pandas as pd
 import requests
-import psycopg2
 import os
-from sqlalchemy import create_engine
+
 
 # #coonect to database
 # with open("db_creds.txt") as f:
@@ -97,9 +95,9 @@ def league_info(league_name):
 
 
 
-def save_league_data(league_data):
-  all_dfs = []
-  directory = "C:/Users/Josh/Desktop/PycharmProjects/PythonProject/poe2_ladder_data"
+def update_keys(league_data):
+#   all_dfs = []
+#   directory = "C:/Users/Josh/Desktop/PycharmProjects/PythonProject/poe2_ladder_data"
   for i, league in enumerate(league_data):
     update_league ={}
     for name, data in league.items():
@@ -107,21 +105,20 @@ def save_league_data(league_data):
        update_league[update_name] = data 
        print(update_name)
     league_data[i] = update_league
-
-  for league_folders in os.listdir(directory):
-     for league in league_data:
-        for key in league:
-           if key == league_folders:
-              output_path = os.path.join(directory, league_folders, f"{key}_ladder_data_{date}.csv")
-              df = league[key]
-              df.to_csv(output_path, index=False)
-              all_dfs.append(df)
-  return all_dfs
-
+  return league_data
+#   for league_folders in os.listdir(directory):
+#      for league in league_data:
+#         for key in league:
+#            if key == league_folders:
+#               output_path = os.path.join(directory, league_folders, f"{key}_ladder_data_{date}.csv")
+#               df = league[key]
+#               df.to_csv(output_path, index=False)
+#               all_dfs.append(df)
+#   print(all_dfs[0].keys())
+#   return all_dfs
+  
 response = league_info(leagues)
-save_league_data(response)
-
-# Next steps, save each league and it's df as a csv in the correct folder based on key = name. lowerand replace.
+update_keys(response)
 
 
 
@@ -136,20 +133,4 @@ save_league_data(response)
 
 
 
-#now that the data is saved on in the folder as csv, also upload it to the database
-# def uploadcsv():
-#     datestamp = datetime.now().date()
-#     file_name = f"poe2_ladder_{datestamp}.csv"
-#     #look at csv
-#     df = pandas.read_csv(f'C:/Users/Josh/Desktop/PycharmProjects/PythonProject/poe2_ladder_data/{file_name}')
-#     #create connection with sqlalchemy
-#     engine = create_engine('postgresql+psycopg2://postgres:Codwaw1212@localhost:5432/Path_of_Exile_2_Ladder')
-#     #upload csv to database
-#     df.to_sql('hc_dawn_of_the_hunt', engine, if_exists ='append', index = False)
 
-
-# def main():
-#     job()
-#     uploadcsv()
-
-# main()
