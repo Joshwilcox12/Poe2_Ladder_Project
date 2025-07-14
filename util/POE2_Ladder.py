@@ -52,7 +52,7 @@ def league_info(league_name):
         if response.status_code == 200:
             ladder = response.json()
             ladder_info = ladder['context']['ladder']['entries']
-            df = pandas.json_normalize(ladder_info)
+            df = pd.json_normalize(ladder_info)
 
             df.columns = [col.replace("character.", "") for col in df.columns]
             df.columns = [col.replace("account.","account_") for col in df.columns]
@@ -116,10 +116,14 @@ def update_keys(league_data):
 #               all_dfs.append(df)
 #   print(all_dfs[0].keys())
 #   return all_dfs
-  
-response = league_info(leagues)
-update_keys(response)
 
+response = league_info(leagues)
+def final():
+  
+   value = update_keys(response)
+   return value
+
+final()
 
 
 
