@@ -8,6 +8,10 @@ from util.POE2_Ladder import final
 from google.cloud import storage
 
 
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:/Users/Josh/Desktop/PycharmProjects/PythonProject/gpc_info/gcs_key.json"
+
+
 todays_date = date.today()
 bucket_name = "poe2_bucket-1"
 destination = "Ladder_Info/"
@@ -40,5 +44,5 @@ def loop_upload():
                    upload_blob_from_memory(bucket_name,content,blob_path)
 
 
-
+loop_upload()
 #need to have google cloud credentials to upload
