@@ -2,7 +2,7 @@ import sys
 import os
 import pandas as pd
 import io
-import datetime as date
+from datetime import date
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 from util.POE2_Ladder import final
 from google.cloud import storage
@@ -40,3 +40,5 @@ def loop_upload():
                    upload_blob_from_memory(bucket_name,content,blob_path)
 
 
+
+#need to have google cloud credentials to upload

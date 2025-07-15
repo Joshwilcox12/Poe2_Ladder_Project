@@ -11,6 +11,7 @@ poesessid.txt
 *.iml
 
 # Data
+gpc_info
 poe2_ladder_data/
 item_listings/player_listings/*.csv
 
